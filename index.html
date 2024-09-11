@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GTCN</title>
+    <style>
+      body {
+        background-color: rgb(236, 244, 244);
+        color: black;
+      }
+      .container {
+        height: 300px;
+        width: 500px;
+        color: black;
+        background-color: cadetblue;
+        margin-top: 100px;
+        margin-left: 300px;
+        text-align: center;
+        border: 2px solid black;
+        border-radius: 10px;
+        padding: 40px;
+        margin-bottom: 70px;
+      }
+      h2 {
+        font-size: 4rem;
+      }
+      label {
+        font-size: 2rem;
+      }
+
+      input[type="text"],
+      input[type="submit"] {
+        font-size: 2em;
+      }
+      input[type="text"] {
+        height: 20px;
+        width: 220px;
+        border-radius: 10px solid white;
+      }
+      input[type="submit"] {
+        height: 40px;
+        width: 100px;
+        border-radius: 10px solid red;
+        border: 2px;
+      }
+
+      #message {
+        font-size: 1.5em;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>GTCN</h2>
+      <form id="guessForm">
+        <label for="Guess">Guess the number</label>
+        <br />
+        <input
+          type="text"
+          name="Guess"
+          id="Guess"
+          required
+          placeholder="enter a number" />
+        <br />
+        <br />
+        <input type="submit" value="Guess" />
+      </form>
+      <div id="message"></div>
+    </div>
+    <script>
+      function getRandomInt(min, max) {
+        const minCeiled = Math.ceil(min);
+        const maxFloored = Math.floor(max);
+        return Math.floor(Math.random() * (maxFloored - minCeiled) + minCeiled);
+      }
+
+      let actNum = getRandomInt(1, 100);
+      let count = 0;
+
+      document
+        .getElementById("guessForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          let gue = Number.parseInt(document.getElementById("Guess").value);
+          let messageElement = document.getElementById("message");
+          document.getElementById("Guess").value = "";
+
+          if (isNaN(gue)) {
+            messageElement.textContent = "Please enter a correct number";
+            return;
+          }
+          let diff = actNum - gue;
+          count += 1;
+
+          if (diff > 0) {
+            messageElement.textContent = `The number is greater than ${gue}.Next opportunityt`;
+          } else if (diff < 0) {
+            messageElement.textContent = `The number is smaller than ${gue}.Next Opportunity`;
+          } else {
+            let score = 100 - count;
+            messageElement.textContent = `Congratulations! you win the $500 amazon bouchers, your score is ${score}`;
+            actNum = getRandomInt(1, 100);
+            count = 0;
+          }
+        });
+    </script>
+  </body>
+</html>
